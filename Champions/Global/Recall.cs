@@ -13,13 +13,8 @@ namespace Spells
 
         public void OnFinishCasting(Champion owner, Spell spell, AttackableUnit target)
         {
-            var visualBuff = ApiFunctionManager.AddBuffHUDVisual("Recall", 8.0f, 1, owner);
-            var addParticle = ApiFunctionManager.AddParticleTarget(owner, "TeleportHome.troy", owner);
-            ApiFunctionManager.CreateTimer(8.0f, () =>
-            {
-                ApiFunctionManager.RemoveBuffHUDVisual(visualBuff);
-                owner.Recall(owner);
-            });
+            owner.canRecall = true;
+            owner.Recall(owner, 8.0f);
         }
 
         public void ApplyEffects(Champion owner, AttackableUnit target, Spell spell, Projectile projectile)
