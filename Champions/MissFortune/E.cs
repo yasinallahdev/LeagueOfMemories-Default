@@ -3,6 +3,8 @@ using LeagueSandbox.GameServer.Logic.GameObjects;
 using LeagueSandbox.GameServer.Logic.API;
 using LeagueSandbox.GameServer.Logic.GameObjects.AttackableUnits;
 using LeagueSandbox.GameServer.Logic.Scripting.CSharp;
+using System.Numerics;
+using LeagueSandbox.GameServer.Logic;
 
 namespace Spells
 {
@@ -24,7 +26,22 @@ namespace Spells
 
         public void OnFinishCasting(Champion owner, Spell spell, AttackableUnit target)
         {
-            Target ZoneCenter = new Target(spell.X, spell.Y);
+            Target ZoneCenter;
+            Vector2 ownerLocation = new Vector2(owner.X, owner.Y);
+            Vector2 targetLocation = new Vector2(spell.X, spell.Y);
+            var spellData = spell.SpellData;
+            float distance = Vector2.Distance(ownerLocation, targetLocation);
+            if (distance > spellData.CastRange[0])
+            {
+                var to = Vector2.Normalize(targetLocation - ownerLocation);
+                var range = to * 800;
+                var trueCoords = ownerLocation + range;
+                ZoneCenter = new Target(trueCoords.X, trueCoords.Y); 
+            }
+            else
+            {
+                ZoneCenter = new Target(spell.X, spell.Y);
+            }
             Particle p = ApiFunctionManager.AddParticleTarget(owner,"missFortune_makeItRain_incoming.troy", ZoneCenter);
             for (byte i = 0; i < 8; ++i)
             {
