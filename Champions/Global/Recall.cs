@@ -13,8 +13,11 @@ namespace Spells
 
         public void OnFinishCasting(Champion owner, Spell spell, AttackableUnit target)
         {
-            owner.canRecall = true;
-            owner.Recall(owner, 8.0f);
+            if (!owner.isRecalling)
+            {
+                owner.canRecall = true;
+                owner.Recall(owner, 8.0f);
+            }
         }
 
         public void ApplyEffects(Champion owner, AttackableUnit target, Spell spell, Projectile projectile)
