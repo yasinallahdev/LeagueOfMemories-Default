@@ -46,5 +46,10 @@ namespace Spells
             ApiFunctionManager.AddParticleTarget(owner, "caitlyn_entrapment_slow.troy", target);
             projectile.setToRemove();
         }
+
+        public void OnUpdate(double diff)
+        {
+
+        }
     }
 }
