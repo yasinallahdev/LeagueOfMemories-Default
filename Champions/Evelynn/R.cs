@@ -60,12 +60,14 @@ namespace Spells
                     {
                         damage = unit.GetStats().CurrentHealth * percentHealthDamage;
                         unit.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
+                        ((ObjAIBase)unit).AddBuffGameScript("EveAgonySlow", "EveAgonySlow", spell, 2.0f, true);
                     }
                     else if (unit is Monster)
                     {
                         damage = unit.GetStats().CurrentHealth * percentHealthDamage;
                         monsterDamage = Math.Max(damage, 1000);
                         unit.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
+                        ((ObjAIBase)unit).AddBuffGameScript("EveAgonySlow", "EveAgonySlow", spell, 2.0f, true);
                     }
                 }
             }
